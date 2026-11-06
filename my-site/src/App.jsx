@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import Department from "./Department";
 import Team from "./Team";
 import About from "./About";
+import Recruitment from "./Recruitment";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Route path="/department" element={<Department />} />
       <Route path="/team" element={<Team />} />
       <Route path="/about" element={<About />} />
+      <Route path="/recruitment" element={<Recruitment />} />
     </Routes>
   );
 }

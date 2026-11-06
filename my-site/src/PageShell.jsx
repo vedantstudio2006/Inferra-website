@@ -6,7 +6,7 @@ import "./Page.css";
 
 export default function PageShell({ children }) {
   const { pathname } = useLocation();
-  const { prev, next } = getNeighbors(pathname);
+  const neighbors = getNeighbors(pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,9 +40,15 @@ export default function PageShell({ children }) {
         <main className="pg__main">{children}</main>
 
         <footer className="pg__foot">
-          <Link to={prev.path} className="pg__step">‹ Previous · {prev.label}</Link>
-          <span className="pg__year">2026© Inferra Labs</span>
-          <Link to={next.path} className="pg__step pg__step--next">{next.label} · Next ›</Link>
+          {neighbors ? (
+            <>
+              <Link to={neighbors.prev.path} className="pg__step">‹ Previous · {neighbors.prev.label}</Link>
+              <span className="pg__year">2025©</span>
+              <Link to={neighbors.next.path} className="pg__step pg__step--next">{neighbors.next.label} · Next ›</Link>
+            </>
+          ) : (
+            <Link to="/" className="pg__step">‹ Back to Home</Link>
+          )}
         </footer>
       </div>
     </div>

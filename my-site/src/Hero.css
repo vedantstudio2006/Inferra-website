@@ -293,3 +293,32 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   .cta { transition: none; }
 }
+
+.cta { text-decoration: none; }
+
+.cta__label {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  padding: 6px 14px;
+  white-space: nowrap;
+  font: 500 12px "Inter", sans-serif;
+  color: #fff;
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.cta:hover .cta__label,
+.cta:focus-visible .cta__label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* phones have no hover, so always show the label */
+@media (hover: none) {
+  .cta__label { opacity: 1; transform: translate(-50%, 0); }
+}

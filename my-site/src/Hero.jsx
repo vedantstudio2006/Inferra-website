@@ -77,11 +77,12 @@ export default function Hero() {
         <div className="arc" />
 
         {/* ---------- CENTER BUTTON ---------- */}
-        <button className="cta" aria-label="Explore">
+        <Link to="/recruitment" className="cta" aria-label="Recruitment">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#111" strokeWidth="1.5">
             <path d="M4 14 L14 4 M6 4 H14 V12" />
           </svg>
-        </button>
+          <span className="cta__label">Recruitment</span>
+        </Link>
 
         {/* ---------- PREV / NEXT ---------- */}
         <button className="step step--prev" onClick={() => navigate("/about")}>‹ Previous</button>
