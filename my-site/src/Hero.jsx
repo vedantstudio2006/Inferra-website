@@ -1,9 +1,16 @@
 import "./Hero.css";
-import bg from "./assets/home3-bg.png"; // <- put your background image here
+import bg from "./assets/home3-bg.png";
+import { Link, useNavigate } from "react-router-dom";
 
-const links = ["Home", "Product", "About", "Blog", "Help"];
+const links = [
+  { label: "Home", to: "/" },
+  { label: "Department", to: "/department" },
+  { label: "Team", to: "/team" },
+  { label: "About", to: "/about" },
+];
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <main className="hero" style={{ backgroundImage: `url(${bg})` }}>
       <div className="frame">
@@ -17,7 +24,7 @@ export default function Hero() {
           </div>
           <nav className="nav__links">
             {links.map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`}>{l}</a>
+              <Link key={l.label} to={l.to}>{l.label}</Link>
             ))}
           </nav>
           <a className="nav__contact" href="#contact">Contact</a>
@@ -27,7 +34,7 @@ export default function Hero() {
         <h1 className="headline">
           Inferra Labs
           <br />
-          
+
         </h1>
 
         {/* ---------- CONNECTOR LINES (SVG, % based) ---------- */}
@@ -40,8 +47,8 @@ export default function Hero() {
 
         {/* ---------- LEFT GLASS CARD ---------- */}
         <aside className="card card--left">
-          <h3>Design That Speaks</h3>
-          <p>Let's Build Something Bold</p>
+          <h3>Think. Build. Innovate.</h3>
+          <p>Where students create technology that matters.</p>
           <div className="card__btns">
             <span className="chip chip--light">S</span>
             <button className="chip chip--dark" aria-label="Add">+</button>
@@ -50,8 +57,8 @@ export default function Hero() {
 
         {/* ---------- RIGHT GLASS CARD ---------- */}
         <aside className="card card--right">
-          <h3>What people say?</h3>
-          <p>Built to inspire, designed to endure.</p>
+          <h3>Beyond Classrooms</h3>
+          <p>Building skills through real-world engineering.</p>
           {/* <div className="avatars">
             {[1, 2, 3].map((i) => (
               <img key={i} src={`https://i.pravatar.cc/60?img=${i + 10}`} alt="" />
@@ -77,8 +84,8 @@ export default function Hero() {
         </button>
 
         {/* ---------- PREV / NEXT ---------- */}
-        <button className="step step--prev">‹ Previous</button>
-        <button className="step step--next">Next ›</button>
+        <button className="step step--prev" onClick={() => navigate("/about")}>‹ Previous</button>
+        <button className="step step--next" onClick={() => navigate("/department")}>Next ›</button>
 
         {/* ---------- BOTTOM-LEFT PANEL ---------- */}
         <small className="year">2025©</small>
