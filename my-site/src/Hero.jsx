@@ -1,4 +1,5 @@
 import "./Hero.css";
+import "./Landing.css";
 import bg from "./assets/home3-bg.png";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,8 +12,13 @@ const links = [
 
 export default function Hero() {
   const navigate = useNavigate();
+  const onMove = (e) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    e.currentTarget.style.setProperty("--px", (e.clientX / window.innerWidth - 0.5).toFixed(3));
+    e.currentTarget.style.setProperty("--py", (e.clientY / window.innerHeight - 0.5).toFixed(3));
+  };
   return (
-    <main className="hero" style={{ backgroundImage: `url(${bg})` }}>
+    <main className="hero" onMouseMove={onMove} style={{ "--bg": `url(${bg})` }}>
       <div className="frame">
         {/* ---------- TOP NAV ---------- */}
         <header className="nav">
@@ -31,10 +37,12 @@ export default function Hero() {
         </header>
 
         {/* ---------- HEADLINE ---------- */}
-        <h1 className="headline">
-          Inferra Labs
-          <br />
-
+        <h1 className="headline" aria-label="Inferra Labs">
+          {"Inferra Labs".split("").map((ch, i) => (
+            <span key={i} className="ch" style={{ "--d": i }} aria-hidden="true">
+              {ch === " " ? "\u00A0" : ch}
+            </span>
+          ))}
         </h1>
 
         {/* ---------- CONNECTOR LINES (SVG, % based) ---------- */}
@@ -102,7 +110,7 @@ export default function Hero() {
         <div className="sign-panel">
           <p>Creating brands for the future of technology</p>
           <svg viewBox="0 0 120 50" width="120" height="50" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round">
-            <path d="M18 8 C12 20 8 36 14 44 C20 38 18 20 28 12 M20 26 C34 22 44 28 40 36 C50 30 60 18 70 24 C76 36 90 22 112 20" />
+            <path className="sig" pathLength="1" d="M18 8 C12 20 8 36 14 44 C20 38 18 20 28 12 M20 26 C34 22 44 28 40 36 C50 30 60 18 70 24 C76 36 90 22 112 20" />
           </svg>
         </div>
 
