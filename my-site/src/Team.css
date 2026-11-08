@@ -1,0 +1,180 @@
+.tm__title { animation: tm-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+
+.tm__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: clamp(28px, 4vw, 48px);
+  perspective: 1200px;
+}
+
+/* ---------- card ---------- */
+.tm__card {
+  --peek: 92px; /* how much of the info panel shows before hover */
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.2s ease-out, border-color 0.3s ease, box-shadow 0.4s ease;
+  animation: tm-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 120ms + 150ms) backwards;
+  outline: none;
+}
+.tm__card:hover,
+.tm__card:focus-visible {
+  border-color: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 40px rgba(120, 190, 255, 0.18);
+}
+
+/* small index number, top left */
+.tm__idx {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 3;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- photo ---------- */
+.tm__photo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, #12304f, #07101f);
+  overflow: hidden;
+}
+.tm__photo::before { /* initials fallback, visible only if the image fails */
+  content: attr(data-initials);
+  font-family: "Gloock", serif;
+  font-size: 64px;
+  color: rgba(255, 255, 255, 0.35);
+}
+.tm__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(1) contrast(1.05) brightness(0.9);
+  transform: scale(1.02);
+  transition: filter 0.6s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tm__card:hover .tm__photo img,
+.tm__card:focus-visible .tm__photo img {
+  filter: grayscale(0) contrast(1) brightness(1);
+  transform: scale(1.09);
+}
+
+/* light that follows the mouse */
+.tm__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+  transition: opacity 0.4s ease;
+}
+.tm__card:hover::after { opacity: 1; }
+
+/* ---------- info panel (slides up on hover) ---------- */
+.tm__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  padding: 16px 18px 18px;
+  background: linear-gradient(to top, rgba(4, 12, 28, 0.92) 55%, rgba(4, 12, 28, 0.55) 85%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform: translateY(calc(100% - var(--peek)));
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tm__card:hover .tm__info,
+.tm__card:focus-visible .tm__info,
+.tm__card:focus-within .tm__info { transform: translateY(0); }
+
+.tm__role {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tm__name {
+  margin-top: 8px;
+  font-family: "Gloock", serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.1;
+}
+
+/* details fade + slide in one after another */
+.tm__details { margin-top: 14px; display: grid; gap: 8px; }
+.tm__details div,
+.tm__links {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tm__details dt { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); }
+.tm__details dd { font-size: 13px; color: rgba(255, 255, 255, 0.92); }
+
+.tm__card:hover .tm__details div,
+.tm__card:hover .tm__links,
+.tm__card:focus-within .tm__details div,
+.tm__card:focus-within .tm__links { opacity: 1; transform: none; }
+.tm__card:hover .tm__details div:nth-child(1), .tm__card:focus-within .tm__details div:nth-child(1) { transition-delay: 0.12s; }
+.tm__card:hover .tm__details div:nth-child(2), .tm__card:focus-within .tm__details div:nth-child(2) { transition-delay: 0.2s; }
+.tm__card:hover .tm__details div:nth-child(3), .tm__card:focus-within .tm__details div:nth-child(3) { transition-delay: 0.28s; }
+.tm__card:hover .tm__links, .tm__card:focus-within .tm__links { transition-delay: 0.36s; }
+
+/* ---------- social icons ---------- */
+.tm__links { display: flex; gap: 10px; margin-top: 14px; }
+.tm__links a {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  color: #fff;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.tm__links a:hover { background: #fff; color: #111; transform: translateY(-3px); }
+.tm__links a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* ---------- entrance animation ---------- */
+@keyframes tm-rise {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .tm__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .tm__grid { grid-template-columns: 1fr; }
+}
+
+/* touch screens have no hover: show every detail */
+@media (hover: none) {
+  .tm__card { aspect-ratio: auto; transform: none; display: flex; flex-direction: column; }
+  .tm__photo { position: relative; aspect-ratio: 4 / 4.2; }
+  .tm__info { position: relative; transform: none; background: rgba(4, 12, 28, 0.9); }
+  .tm__details div, .tm__links { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tm__card, .tm__title { animation: none; }
+  .tm__card, .tm__info, .tm__photo img, .tm__details div, .tm__links { transition: none; }
+}

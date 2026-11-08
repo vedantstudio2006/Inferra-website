@@ -43,7 +43,7 @@ export default function PageShell({ children }) {
           {neighbors ? (
             <>
               <Link to={neighbors.prev.path} className="pg__step">‹ Previous · {neighbors.prev.label}</Link>
-              <span className="pg__year">2025©</span>
+              <span className="pg__year">2026© Inferra Labs</span>
               <Link to={neighbors.next.path} className="pg__step pg__step--next">{neighbors.next.label} · Next ›</Link>
             </>
           ) : (
