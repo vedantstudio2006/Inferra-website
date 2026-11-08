@@ -1,0 +1,147 @@
+/* ---------- full-screen background that changes on hover ---------- */
+.dp__bgs { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.dp__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 0.9s ease, transform 2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.dp__bg::after { /* keeps the text readable on any photo */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(4, 12, 28, 0.45), rgba(4, 12, 28, 0.82));
+}
+.dp__bg.is-on { opacity: 1; transform: scale(1); }
+
+/* ---------- list ---------- */
+.dp__list { border-bottom: 1px solid rgba(255, 255, 255, 0.45); }
+
+.dp__row {
+  position: relative;
+  padding: 28px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.45s ease;
+  animation: dp-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 100ms + 100ms) backwards;
+}
+.dp__list.has-active .dp__row:not(.is-active) { opacity: 0.35; }
+
+/* white line that sweeps across the top border */
+.dp__row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.dp__row.is-active::before { transform: scaleX(1); }
+
+/* soft glow that fades in from the left */
+.dp__row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.dp__row.is-active::after { opacity: 1; }
+
+/* content slides right */
+.dp__body {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.dp__row.is-active .dp__body { transform: translateX(20px); }
+
+/* name + arrow */
+.dp__name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "Gloock", serif;
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.1;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+  transition: text-shadow 0.5s ease;
+}
+.dp__row.is-active .dp__name { text-shadow: 0 0 34px rgba(140, 200, 255, 0.55); }
+
+.dp__arrow {
+  flex: none;
+  opacity: 0;
+  transform: translateX(-16px) rotate(-90deg);
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.dp__row.is-active .dp__arrow { opacity: 1; transform: none; }
+
+.dp__text {
+  margin-top: 8px;
+  max-width: 52ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  transition: color 0.4s ease;
+}
+.dp__row.is-active .dp__text { color: #fff; }
+
+/* tag pills fill with white one after another */
+.dp__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; list-style: none; }
+.dp__tags li {
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--k) * 70ms);
+}
+.dp__row.is-active .dp__tags li {
+  background: #fff;
+  border-color: #fff;
+  color: #111;
+  transform: translateY(-2px);
+}
+
+/* big outlined number on the right */
+.dp__num {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  z-index: 0;
+  font-family: "Gloock", serif;
+  font-size: clamp(56px, 8vw, 110px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  transform: translate(40px, -50%);
+  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.dp__row.is-active .dp__num { opacity: 1; transform: translate(0, -50%); }
+
+@keyframes dp-rise { from { opacity: 0; transform: translateY(30px); } }
+
+@media (max-width: 800px) { .dp__num { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .dp__row { animation: none; }
+  .dp__bg, .dp__row, .dp__row::before, .dp__row::after, .dp__body,
+  .dp__arrow, .dp__tags li, .dp__num { transition: none; }
+}

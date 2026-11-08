@@ -4,7 +4,7 @@ import bg from "./assets/home3-bg.png"; // same image as the hero
 import { pages, getNeighbors } from "./pages";
 import "./Page.css";
 
-export default function PageShell({ children }) {
+export default function PageShell({ children, backdrop }) {
   const { pathname } = useLocation();
   const neighbors = getNeighbors(pathname);
 
@@ -14,6 +14,7 @@ export default function PageShell({ children }) {
 
   return (
     <div className="pg" style={{ backgroundImage: `url(${bg})` }}>
+      {backdrop}
       <div className="pg__frame">
         <header className="pg__nav">
           <Link to="/" className="pg__logo" aria-label="Home">
