@@ -7,17 +7,18 @@ const img = (file) => new URL(`./assets/departments/${file}`, import.meta.url).h
 
 // EDIT THIS LIST. "tags" are separated by commas.
 const departments = [
-  {
-    name: "Web & App Development",
-    bg: "Web.png",
-    text: "Students design and ship real websites and apps for clubs, events and local businesses.",
-    tags: "React, Node.js, UI design",
-  },
+  
   {
     name: "AI & Machine Learning",
     bg: "AI.png",
     text: "Teams train and test models on real data, from image recognition to simple chatbots.",
     tags: "Python, data, model training",
+  },
+  {
+    name: "Web & App Development",
+    bg: "Web.png",
+    text: "Students design and ship real websites and apps for clubs, events and local businesses.",
+    tags: "React, Node.js, UI design",
   },
   {
     name: "Cyber Security",
