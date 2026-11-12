@@ -1,45 +1,215 @@
+
+/* =================================
+   RECRUITMENT FORM
+================================= */
+
 .rec__form {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 26px;
+  align-content: start;
 }
-.rec__field { display: flex; flex-direction: column; gap: 6px; }
-.rec__field--full { grid-column: 1 / -1; }
-.rec__field label { font-size: 12px; color: rgba(255, 255, 255, 0.65); }
+
+/* Section headings */
+
+.rec__section {
+  grid-column: 1 / -1;
+  margin: 12px 0 0;
+  padding-bottom: 12px;
+
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+/* Individual fields */
+
+.rec__field {
+  min-width: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.rec__field--full {
+  grid-column: 1 / -1;
+}
+
+/* Labels */
+
+.rec__field label {
+  display: block;
+  color: rgba(255,255,255,0.75);
+
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* Inputs */
 
 .rec__field input,
 .rec__field select,
 .rec__field textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.45);
   border-radius: 0;
+
   color: #fff;
-  font: 400 14px "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  transition: border-color 0.2s, background 0.2s;
 }
-.rec__field select option { color: #111; }
-.rec__field textarea { resize: vertical; min-height: 110px; }
+
+/* Placeholder */
+
+.rec__field input::placeholder,
+.rec__field textarea::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+/* Dropdown */
+
+.rec__field select {
+  cursor: pointer;
+}
+
+.rec__field select option {
+  background: #101827;
+  color: #fff;
+}
+
+/* Textarea */
+
+.rec__field textarea {
+  min-height: 105px;
+  resize: vertical;
+}
+
+/* File upload */
+
+.rec__field input[type="file"] {
+  cursor: pointer;
+}
+
+/* Focus */
+
 .rec__field input:focus,
 .rec__field select:focus,
-.rec__field textarea:focus { outline: 2px solid #fff; outline-offset: 2px; }
+.rec__field textarea:focus {
+  outline: none;
+  border-color: #fff;
+  background: rgba(255,255,255,0.13);
+}
+
+/* Helper text */
+
+.rec__field small {
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+}
+
+/* Register button */
 
 .rec__submit {
   justify-self: start;
-  padding: 14px 32px;
-  border: 0;
+
+  padding: 14px 34px;
+
+  border: none;
   border-radius: 999px;
+
   background: #fff;
   color: #111;
-  font: 500 14px "Inter", sans-serif;
-  cursor: pointer;
-}
-.rec__submit:disabled { opacity: 0.6; cursor: wait; }
-.rec__error { grid-column: 1 / -1; font-size: 13px; color: #ffb4a8; }
 
-.rec__done { padding: 28px 16px; border-top: 1px solid rgba(255, 255, 255, 0.45); border-bottom: 1px solid rgba(255, 255, 255, 0.45); }
-.rec__done h2 { font-family: "Gloock", serif; font-weight: 400; font-size: clamp(24px, 3vw, 36px); }
-.rec__done p { margin-top: 10px; font-size: 14px; color: rgba(255, 255, 255, 0.7); }
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.rec__submit:hover {
+  background: #dce7f5;
+  transform: translateY(-2px);
+}
+
+.rec__submit:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  transform: none;
+}
+
+/* Error message */
+
+.rec__error {
+  grid-column: 1 / -1;
+  color: #ffb4a8;
+  font-size: 13px;
+}
+
+/* Success message */
+
+.rec__done {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 28px;
+
+  border-top: 1px solid rgba(255,255,255,0.4);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+.rec__done h2 {
+  color: white;
+  font-family: "Gloock", serif;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+}
+
+.rec__done p {
+  margin-top: 14px;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 900px) {
+  .rec__form {
+    gap: 18px;
+  }
+}
 
 @media (max-width: 600px) {
-  .rec__form { grid-template-columns: 1fr; }
+  .rec__form {
+    grid-template-columns: 1fr;
+  }
+
+  .rec__field--full,
+  .rec__section {
+    grid-column: 1;
+  }
+
+  .rec__submit {
+    width: 100%;
+  }
 }

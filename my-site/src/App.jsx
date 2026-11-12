@@ -4,6 +4,8 @@ import Department from "./Department";
 import Team from "./Team";
 import About from "./About";
 import Recruitment from "./Recruitment";
+import StaffCheckIn from "./interview/StaffCheckIn";
+import JudgeDashboard from "./interview/JudgeDashboard";
 
 export default function App() {
   return (
@@ -13,6 +15,8 @@ export default function App() {
       <Route path="/team" element={<Team />} />
       <Route path="/about" element={<About />} />
       <Route path="/recruitment" element={<Recruitment />} />
+      <Route path="/staff" element={<StaffCheckIn />} />
+      <Route path="/judge" element={<JudgeDashboard />} />
     </Routes>
   );
 }

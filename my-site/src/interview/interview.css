@@ -1,0 +1,132 @@
+/* Staff check-in and judge dashboard. Uses the same look as the rest of the site. */
+.iv__login, .iv__staff, .iv__judge { display: flex; flex-direction: column; gap: 22px; max-width: 760px; }
+.iv__form { display: flex; flex-direction: column; gap: 16px; max-width: 420px; }
+.iv__form label, .iv__field, .iv__scores label {
+  display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: rgba(255, 255, 255, 0.75);
+}
+.iv__form input, .iv__field select, .iv__field textarea, .iv__scores input {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 0;
+  color: #fff;
+  font: 400 14px "Inter", sans-serif;
+}
+.iv__field select option { color: #111; }
+.iv__form input:focus, .iv__field select:focus, .iv__field textarea:focus, .iv__scores input:focus {
+  outline: 2px solid #fff; outline-offset: 2px;
+}
+
+.iv__btn {
+  align-self: flex-start;
+  padding: 13px 28px;
+  border: 0; border-radius: 999px;
+  background: #fff; color: #111;
+  font: 500 14px "Inter", sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.iv__btn:hover:not(:disabled) { transform: translateY(-2px); }
+.iv__btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.iv__link {
+  background: none; border: 0; padding: 0;
+  color: rgba(255, 255, 255, 0.85); font: 400 13px "Inter", sans-serif;
+  text-decoration: underline; cursor: pointer; align-self: flex-start;
+}
+.iv__btn:focus-visible, .iv__link:focus-visible, .iv__scanner a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.iv__error { font-size: 13px; color: #ffb4a8; }
+.iv__hint { font-size: 12px; color: rgba(255, 255, 255, 0.6); }
+.iv__mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; word-break: break-all; }
+
+/* ---------- scanner ---------- */
+.iv__room { font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.iv__reader {
+  width: 100%; max-width: 420px; min-height: 280px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.iv__reader video { width: 100% !important; height: auto !important; }
+
+.iv__result {
+  padding: 22px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(4, 12, 28, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex; flex-direction: column; gap: 10px;
+  animation: iv-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.iv__result h2 { font-family: "Gloock", serif; font-weight: 400; font-size: 28px; }
+.iv__result p { font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); }
+.iv__result--ok { border-color: #7ee2a8; }
+.iv__result--ok h2 { color: #7ee2a8; }
+.iv__result--warn { border-color: #ffd27a; }
+.iv__result--warn h2 { color: #ffd27a; }
+.iv__result--bad { border-color: #ffb4a8; }
+.iv__result--bad h2 { color: #ffb4a8; }
+
+.iv__student { display: grid; gap: 8px; }
+.iv__student div, .iv__grid div { display: flex; flex-direction: column; gap: 2px; }
+.iv__student dt, .iv__grid dt { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); }
+.iv__student dd, .iv__grid dd { font-size: 14px; color: #fff; }
+
+.iv__manual { border-top: 1px solid rgba(255, 255, 255, 0.4); padding-top: 14px; }
+.iv__manual summary { cursor: pointer; font-size: 14px; margin-bottom: 14px; }
+
+/* ---------- judge ---------- */
+.iv__judge-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.iv__conn {
+  padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 999px;
+  font-size: 12px; white-space: nowrap;
+}
+.iv__conn small { color: rgba(255, 255, 255, 0.6); }
+.iv__conn--live::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px;
+  border-radius: 50%; background: #7ee2a8; box-shadow: 0 0 0 0 rgba(126, 226, 168, 0.7);
+  animation: iv-pulse 1.8s infinite;
+}
+.iv__conn--offline, .iv__conn--reconnecting { border-color: #ffd27a; color: #ffd27a; }
+.iv__queue { font-size: 13px; color: rgba(255, 255, 255, 0.7); letter-spacing: 0.04em; }
+
+.iv__empty, .iv__done {
+  padding: 28px 20px; border: 1px dashed rgba(255, 255, 255, 0.4);
+}
+.iv__empty h2, .iv__done h3 { font-family: "Gloock", serif; font-weight: 400; font-size: 26px; }
+.iv__empty p, .iv__done p { font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-top: 8px; }
+
+.iv__student-card {
+  padding: 24px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.10), rgba(4, 12, 28, 0.55));
+  backdrop-filter: blur(8px);
+  animation: iv-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  display: flex; flex-direction: column; gap: 18px;
+}
+.iv__student-card h2 { font-family: "Gloock", serif; font-weight: 400; font-size: clamp(26px, 3vw, 38px); margin-top: 10px; }
+.iv__student-card header p { color: rgba(255, 255, 255, 0.6); margin-top: 4px; }
+.iv__pill {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid #7ee2a8; color: #7ee2a8; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.iv__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 20px; }
+.iv__grid .iv__wide { grid-column: 1 / -1; }
+.iv__pre { white-space: pre-wrap; line-height: 1.5; }
+.iv__links { display: flex; gap: 16px; flex-wrap: wrap; }
+.iv__links a { color: #fff; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); text-decoration: none; }
+.iv__links a:hover { border-color: #fff; }
+
+.iv__eval { display: flex; flex-direction: column; gap: 16px; padding: 22px; border: 1px solid rgba(255, 255, 255, 0.45); }
+.iv__eval h3 { font-family: "Gloock", serif; font-weight: 400; font-size: 24px; }
+.iv__scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.iv__scores input { width: 100%; }
+.iv__finish { margin-top: 4px; }
+
+@keyframes iv-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes iv-pulse { 0% { box-shadow: 0 0 0 0 rgba(126, 226, 168, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(126, 226, 168, 0); } 100% { box-shadow: 0 0 0 0 rgba(126, 226, 168, 0); } }
+
+@media (max-width: 640px) {
+  .iv__grid, .iv__scores { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .iv__result, .iv__student-card, .iv__conn--live::before { animation: none; }
+}
