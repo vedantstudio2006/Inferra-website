@@ -35,7 +35,7 @@ export default function PageShell({ children, backdrop }) {
               </NavLink>
             ))}
           </nav>
-          <a className="pg__contact" href="#contact">Contact</a>
+          <Link to="/contact" className="pg__contact">Contact</Link>
         </header>
 
         <main className="pg__main">{children}</main>

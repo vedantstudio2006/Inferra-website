@@ -455,3 +455,8 @@ entrypoint = "./functions/submit-judge-evaluation/index.ts"
 enabled = true
 verify_jwt = true
 entrypoint = "./functions/admin-manage-interviews/index.ts"
+# Add to the end of supabase/config.toml. The contact form is public, so no login is required.
+[functions.send-contact]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/send-contact/index.ts"

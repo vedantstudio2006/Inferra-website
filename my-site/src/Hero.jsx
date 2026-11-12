@@ -33,7 +33,7 @@ export default function Hero() {
               <Link key={l.label} to={l.to}>{l.label}</Link>
             ))}
           </nav>
-          <a className="nav__contact" href="#contact">Contact</a>
+          <Link to="/contact" className="nav__contact">Contact</Link>
         </header>
 
         {/* ---------- HEADLINE ---------- */}
