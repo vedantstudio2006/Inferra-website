@@ -1,0 +1,18 @@
+/* Navbar logo. Spacing comes from the props on <Logo />. */
+.brand-logo {
+  display: block;
+  width: var(--logo-size, 28px);
+  height: var(--logo-size, 28px);
+  padding: var(--logo-pad, 6px);
+  margin: var(--logo-margin, 0);
+  box-sizing: content-box;   /* padding is added outside the picture */
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
+}
+.brand-logo:hover {
+  transform: rotate(-8deg) scale(1.06);
+  filter: drop-shadow(0 0 10px rgba(159, 212, 255, 0.6));
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo, .brand-logo:hover { transition: none; transform: none; }
+}
